@@ -58,12 +58,7 @@ public class Friend {
         }
     }
 
-    /**
-     * Read method to a file
-     * @param file RandomAcessFile
-     * @return a Friend instance (maybe null)
-     */
-    public Friend read(RandomAccessFile file){
+    public void read(RandomAccessFile file){
         try{
             char[] fname = new char[nameLength];
             for(int i = 0; i < nameLength; i++){
@@ -77,13 +72,13 @@ public class Friend {
             for(int i = 0; i < phoneLength; i++){
                 phone[i] = file.readChar();
             }
-            String first = new String(fname);
-            String last = new String(lname);
-            String phoneN = new String(phone);
-            return new Friend(first, last, phoneN);
+            setFirstName(new String(fname));
+            setLastName(new String(lname));
+            setPhone(new String(phone));
+
         }catch (Exception e){
+            System.out.println("Friend class | read: " + e.getMessage());
         }
-        return null;
     }
 
     /**
@@ -91,7 +86,7 @@ public class Friend {
      * @return String representation of Friend
      */
     public String toString(){
-        return String.format("%s, %s: %s\n", firstName.toString().trim(),
+        return String.format("%s, %s: %s", firstName.toString().trim(),
                 lastName.toString().trim(), phone.toString().trim());
     }
 
@@ -110,4 +105,17 @@ public class Friend {
     public String getLastName() {
         return lastName.toString();
     }
+
+    public void setFirstName(String firstName) {
+        this.firstName = new StringBuffer(firstName);
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = new StringBuffer(lastName);
+    }
+
+    public void setPhone(String phone) {
+        this.phone = new StringBuffer(phone);
+    }
+
 }//End of class

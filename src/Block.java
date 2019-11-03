@@ -6,16 +6,16 @@ import java.io.RandomAccessFile;
 
 public class Block {
     private Friend friend;
-    private int prev, next;
-    private int blockSize = 88;
+    private long prev, next;
+    private int blockSize = 96;
 
-    public Block(int prev, int next){
+    public Block(long prev, long next){
         friend = new Friend();
         this.prev = prev;
         this.next = next;
     }
 
-    public Block(Friend friend, int prev, int next){
+    public Block(Friend friend, long prev, long next){
         this.friend = friend;
         this.prev = prev;
         this.next = next;
@@ -24,14 +24,14 @@ public class Block {
     public void write(RandomAccessFile file){
         friend.write(file);
         try{
-            file.writeInt(prev);
-            file.writeInt(next);
+            file.writeLong(prev);
+            file.writeLong(next);
         }catch (Exception e){
 
         }
     }
 
-    public int getPrev() {
+    public long getPrev() {
         return prev;
     }
 
@@ -39,23 +39,41 @@ public class Block {
         return friend;
     }
 
-    public int getNext() {
+    public long getNext() {
         return next;
     }
 
-    public Block read(RandomAccessFile file){
-        Friend friend = new Friend().read(file);
+    public void read(RandomAccessFile file){
         try{
-            int prev = file.readInt();
-            int next = file.readInt();
-            return new Block(friend, prev, next);
+            Friend friend = new Friend();
+            friend.read(file);
+            long prev = file.readLong();
+            long next = file.readLong();
+            setFriend(friend);
+            setPrev(prev);
+            setNext(next);
         }catch (Exception e){
-
+            System.out.println("Block class | read : " + e.getMessage());
         }
-        return null;
+    }
+
+    public void setFriend(Friend friend) {
+        this.friend = friend;
+    }
+
+    public void setNext(long next) {
+        this.next = next;
+    }
+
+    public void setPrev(long prev) {
+        this.prev = prev;
     }
 
     public int getBlockSize() {
         return blockSize;
+    }
+
+    public String toString(){
+        return String.format("%s\nprev: %s next: %s", friend.toString(), prev, next);
     }
 }
