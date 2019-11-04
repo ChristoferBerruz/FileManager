@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8a2bd4db-bbff-4135-bef8-ed84b85c480d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/block.data" beforeDir="false" afterPath="$PROJECT_DIR$/block.data" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/block2.data" beforeDir="false" afterPath="$PROJECT_DIR$/block2.data" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/BlockedFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BlockedFile.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Driver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Driver.java" afterDir="false" />
     </list>
@@ -21,12 +21,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Friend.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
-              <caret line="89" selection-start-line="89" selection-end-line="89" />
+            <state relative-caret-position="115">
+              <caret line="105" selection-start-line="105" selection-end-line="105" />
               <folding>
                 <element signature="e#3099#3100#0" expanded="true" />
                 <element signature="e#3138#3139#0" expanded="true" />
-                <element signature="e#3252#3253#0" expanded="true" />
                 <element signature="e#3294#3295#0" expanded="true" />
               </folding>
             </state>
@@ -36,19 +35,19 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Block.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="115">
-              <caret line="42" selection-start-line="42" selection-end-line="42" />
+            <state relative-caret-position="92">
+              <caret line="65" selection-start-line="65" selection-end-line="65" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
                 <element signature="e#707#708#0" expanded="true" />
                 <element signature="e#734#735#0" expanded="true" />
                 <element signature="e#767#768#0" expanded="true" />
                 <element signature="e#796#797#0" expanded="true" />
+                <element signature="e#825#826#0" expanded="true" />
                 <element signature="e#852#853#0" expanded="true" />
                 <element signature="e#1315#1316#0" expanded="true" />
                 <element signature="e#1351#1352#0" expanded="true" />
                 <element signature="e#1389#1390#0" expanded="true" />
-                <element signature="e#1421#1422#0" expanded="true" />
                 <element signature="e#1459#1460#0" expanded="true" />
                 <element signature="e#1491#1492#0" expanded="true" />
                 <element signature="e#1524#1525#0" expanded="true" />
@@ -63,8 +62,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/BlockedFile.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="309">
-              <caret line="53" selection-start-line="53" selection-end-line="53" />
+            <state relative-caret-position="279">
+              <caret line="129" column="61" selection-start-line="129" selection-start-column="61" selection-end-line="129" selection-end-column="61" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -75,8 +74,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Driver.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" selection-start-line="10" selection-end-line="10" />
+            <state relative-caret-position="136">
+              <caret line="8" column="50" selection-start-line="8" selection-start-column="50" selection-end-line="8" selection-end-column="50" />
             </state>
           </provider>
         </entry>
@@ -240,15 +239,16 @@
       <workItem from="1572707955268" duration="21038000" />
       <workItem from="1572744495857" duration="580000" />
       <workItem from="1572745136330" duration="99000" />
-      <workItem from="1572820128639" duration="6379000" />
+      <workItem from="1572820128639" duration="11462000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="54655000" />
+    <option name="totallyTimeSpent" value="59738000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Designer" order="0" />
       <window_info id="UI Designer" order="1" />
@@ -264,8 +264,8 @@
       <window_info anchor="bottom" id="Event Log" order="4" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="5" />
       <window_info anchor="bottom" id="Find" order="6" weight="0.3286119" />
-      <window_info anchor="bottom" id="Run" order="7" weight="0.66997164" />
-      <window_info active="true" anchor="bottom" id="Debug" order="8" visible="true" weight="0.44192636" />
+      <window_info active="true" anchor="bottom" id="Run" order="7" visible="true" weight="0.54532576" />
+      <window_info anchor="bottom" id="Debug" order="8" weight="0.61331445" />
       <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
       <window_info anchor="bottom" id="Messages" order="10" weight="0.3286119" />
       <window_info anchor="bottom" id="Inspection" order="11" weight="0.4" />
@@ -283,18 +283,6 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Driver.java</url>
-          <line>9</line>
-          <properties />
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/FriendProgram.java" />
@@ -316,21 +304,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Driver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" selection-start-line="10" selection-end-line="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Friend.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="89" selection-start-line="89" selection-end-line="89" />
+        <state relative-caret-position="115">
+          <caret line="105" selection-start-line="105" selection-end-line="105" />
           <folding>
             <element signature="e#3099#3100#0" expanded="true" />
             <element signature="e#3138#3139#0" expanded="true" />
-            <element signature="e#3252#3253#0" expanded="true" />
             <element signature="e#3294#3295#0" expanded="true" />
           </folding>
         </state>
@@ -338,19 +318,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Block.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="42" selection-start-line="42" selection-end-line="42" />
+        <state relative-caret-position="92">
+          <caret line="65" selection-start-line="65" selection-end-line="65" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
             <element signature="e#707#708#0" expanded="true" />
             <element signature="e#734#735#0" expanded="true" />
             <element signature="e#767#768#0" expanded="true" />
             <element signature="e#796#797#0" expanded="true" />
+            <element signature="e#825#826#0" expanded="true" />
             <element signature="e#852#853#0" expanded="true" />
             <element signature="e#1315#1316#0" expanded="true" />
             <element signature="e#1351#1352#0" expanded="true" />
             <element signature="e#1389#1390#0" expanded="true" />
-            <element signature="e#1421#1422#0" expanded="true" />
             <element signature="e#1459#1460#0" expanded="true" />
             <element signature="e#1491#1492#0" expanded="true" />
             <element signature="e#1524#1525#0" expanded="true" />
@@ -361,10 +341,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Driver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="50" selection-start-line="8" selection-start-column="50" selection-end-line="8" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/BlockedFile.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="309">
-          <caret line="53" selection-start-line="53" selection-end-line="53" />
+        <state relative-caret-position="279">
+          <caret line="129" column="61" selection-start-line="129" selection-start-column="61" selection-end-line="129" selection-end-column="61" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

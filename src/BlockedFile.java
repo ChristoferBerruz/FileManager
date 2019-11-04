@@ -85,8 +85,8 @@ public class BlockedFile {
         long takefrom = fp;
         Block insertBlock  = getBlockAt(takefrom);
         insertBlock.setFriend(friend);
-        long locPrev = insertBlock.getPrev();
-        Block lastDataBlock = getBlockAt(locPrev);
+        long lastDataLoc = insertBlock.getPrev();
+        Block lastDataBlock = getBlockAt(lastDataLoc);
         fp = insertBlock.getNext();
         Block head = getBlockAt(dp);
         long current = dp;
@@ -94,7 +94,7 @@ public class BlockedFile {
             current = head.getNext();
             head = getBlockAt(current);
         }
-        if(head.getNext() == takefrom){
+        if(head.getNext() == takefrom && current==lastDataLoc){
             insertBlock.setPrev(current);
             head.setNext(takefrom);
             writeBlockAt(takefrom, insertBlock);
@@ -107,19 +107,29 @@ public class BlockedFile {
                 dp = takefrom;
                 writeBlockAt(current, head);
                 writeBlockAt(takefrom, insertBlock);
+                lastDataBlock.setNext(fp);
+                writeBlockAt(lastDataLoc, lastDataBlock);
             }else{
                 long prev = head.getPrev();
                 Block prevBlock = getBlockAt(prev);
                 insertBlock.setPrev(prev);
                 insertBlock.setNext(current);
                 head.setPrev(takefrom);
-                prevBlock.setNext(takefrom);
-                writeBlockAt(current, head);
-                writeBlockAt(prev, prevBlock);
-                writeBlockAt(takefrom, insertBlock);
+                if(lastDataLoc==current){
+                    head.setNext(fp);
+                    prevBlock.setNext(takefrom);
+                    writeBlockAt(current, head);
+                    writeBlockAt(prev, prevBlock);
+                    writeBlockAt(takefrom, insertBlock);
+                }else{
+                    prevBlock.setNext(takefrom);
+                    writeBlockAt(current, head);
+                    writeBlockAt(prev, prevBlock);
+                    writeBlockAt(takefrom, insertBlock);
+                    lastDataBlock.setNext(fp);
+                    writeBlockAt(lastDataLoc, lastDataBlock);
+                }
             }
-            lastDataBlock.setNext(fp);
-            writeBlockAt(locPrev, lastDataBlock);
         }
         try{
             file.seek(0L);
