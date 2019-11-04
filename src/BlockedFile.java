@@ -1,3 +1,5 @@
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
+
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
@@ -67,16 +69,7 @@ public class BlockedFile {
             fp = file.readLong();
             if(fp != -1){
                 if(dp == -1){
-                    //There is nothing in the file yet
-                    long saveLoc = fp;
-                    Block block = getBlockAt(saveLoc);
-                    block.setFriend(friend);
-                    writeBlockAt(saveLoc, block);
-                    dp = fp;
-                    fp = block.getNext();
-                    file.seek(0L);
-                    file.writeLong(dp);
-                    file.writeLong(fp);
+                    insertFirst(friend);
                 }else{
                     insert(friend);
                 }
@@ -84,26 +77,74 @@ public class BlockedFile {
                 System.out.println("No more space in file");
             }
         }catch (Exception e){
-
+            System.out.println(e.getMessage());
         }
     }
 
     public void insert(Friend friend){
-        long origin = fp;
-        Block block = getBlockAt(origin);
-        block.setFriend(friend);
-        fp = block.getNext();
-        long cur = dp;
-        Block currentBlock = getBlockAt(dp);
-        long next = currentBlock.getNext();
-        Block nextBlock = getBlockAt(next);
-        if(!lessThan(currentBlock, block)){
-            dp = origin;
-            block.setPrev(-1);
-            block.setNext(cur);
+        long takefrom = fp;
+        Block insertBlock  = getBlockAt(takefrom);
+        insertBlock.setFriend(friend);
+        long locPrev = insertBlock.getPrev();
+        Block lastDataBlock = getBlockAt(locPrev);
+        fp = insertBlock.getNext();
+        Block head = getBlockAt(dp);
+        long current = dp;
+        while(!lessThan(insertBlock,head) && (head.getNext()!= takefrom)){
+            current = head.getNext();
+            head = getBlockAt(current);
+        }
+        if(head.getNext() == takefrom){
+            insertBlock.setPrev(current);
+            head.setNext(takefrom);
+            writeBlockAt(takefrom, insertBlock);
+            writeBlockAt(current, head);
+        }else{
+            if(current == dp){
+                insertBlock.setPrev(-1);
+                insertBlock.setNext(current);
+                head.setPrev(takefrom);
+                dp = takefrom;
+                writeBlockAt(current, head);
+                writeBlockAt(takefrom, insertBlock);
+            }else{
+                long prev = head.getPrev();
+                Block prevBlock = getBlockAt(prev);
+                insertBlock.setPrev(prev);
+                insertBlock.setNext(current);
+                head.setPrev(takefrom);
+                prevBlock.setNext(takefrom);
+                writeBlockAt(current, head);
+                writeBlockAt(prev, prevBlock);
+                writeBlockAt(takefrom, insertBlock);
+            }
+            lastDataBlock.setNext(fp);
+            writeBlockAt(locPrev, lastDataBlock);
+        }
+        try{
+            file.seek(0L);
+            file.writeLong(dp);
+            file.writeLong(fp);
+        }catch (Exception e){
 
         }
 
+    }
+
+    public void insertFirst(Friend friend){
+        long saveLoc = fp;
+        Block block = getBlockAt(saveLoc);
+        block.setFriend(friend);
+        writeBlockAt(saveLoc, block);
+        dp = fp;
+        fp = block.getNext();
+        try {
+            file.seek(0L);
+            file.writeLong(dp);
+            file.writeLong(fp);
+        }catch (IOException e){
+            System.out.println(e.getMessage());
+        }
     }
 
     public Block getBlockAt(long address){
@@ -118,8 +159,9 @@ public class BlockedFile {
         return null;
     }
     public boolean lessThan(Block newBlock, Block nextBlock){
-        return Integer.parseInt(newBlock.getFriend().getPhone()) <=
-                Integer.parseInt(nextBlock.getFriend().getPhone());
+        int n1 = newBlock.getFriend().getLastName().charAt(0);
+        int n2 = nextBlock.getFriend().getLastName().charAt(0);
+        return n1 <= n2;
     }
     public void writeBlockAt(long address, Block block){
         try{
