@@ -1,5 +1,3 @@
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
-
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
@@ -38,30 +36,35 @@ public class BlockedFile {
         }
     }
 
-    public void printToConsole(){
+    public String getDataLL(boolean isData){
         try{
+            StringBuilder out = new StringBuilder("");
             file.seek(0L);
             long dp = file.readLong();
             long fp = file.readLong();
-            System.out.println(dp);
-            System.out.println(fp);
+            if(!isData){
+               dp = fp;
+            }
+            out.append(dp + " ");
             file.seek(dp);
             Block block;
             do{
                 block = new Block(-1,-1);
                 block.read(file);
-                System.out.println(block.toString());
+                out.append(block.toString() + "\n");
                 if(block.getNext() != -1){
                     file.seek(block.getNext());
+                    out.append(block.getNext() + " ");
                 }else{
                     break;
                 }
             }while(true);
+            return out.toString();
         }catch (IOException e){
             System.out.println("BlockedFile | printToConsole: " + e.getMessage());
         }
+        return "DUMMY";
     }
-
     public void saveToFile(Friend friend){
         try{
             file.seek(0L);
@@ -85,52 +88,51 @@ public class BlockedFile {
         long takefrom = fp;
         Block insertBlock  = getBlockAt(takefrom);
         insertBlock.setFriend(friend);
-        long lastDataLoc = insertBlock.getPrev();
-        Block lastDataBlock = getBlockAt(lastDataLoc);
         fp = insertBlock.getNext();
         Block head = getBlockAt(dp);
         long current = dp;
-        while(!lessThan(insertBlock,head) && (head.getNext()!= takefrom)){
+        while(!lessThan(insertBlock,head) && !isTail(head)){
             current = head.getNext();
             head = getBlockAt(current);
         }
-        if(head.getNext() == takefrom && current==lastDataLoc){
-            insertBlock.setPrev(current);
-            head.setNext(takefrom);
-            writeBlockAt(takefrom, insertBlock);
-            writeBlockAt(current, head);
-        }else{
-            if(current == dp){
+        if(isTail(head) && isHead(head)) //Only one element
+        {
+            if(lessThan(insertBlock, head))
+            {
+                insertBlock.setPrev(-1);
+                insertBlock.setNext(current);
+                head.setPrev(takefrom);
+                head.setNext(-1);
+                dp = takefrom;
+            }else {
+                head.setNext(takefrom);
+                insertBlock.setPrev(current);
+                insertBlock.setNext(-1);
+            }
+        }else {
+            //Multiple elements
+            if(isHead(head)){
                 insertBlock.setPrev(-1);
                 insertBlock.setNext(current);
                 head.setPrev(takefrom);
                 dp = takefrom;
-                writeBlockAt(current, head);
-                writeBlockAt(takefrom, insertBlock);
-                lastDataBlock.setNext(fp);
-                writeBlockAt(lastDataLoc, lastDataBlock);
+            }
+            else if(isTail(head) && lessThan(head, insertBlock) ) {
+                insertBlock.setNext(-1);
+                insertBlock.setPrev(current);
+                head.setNext(takefrom);
             }else{
                 long prev = head.getPrev();
                 Block prevBlock = getBlockAt(prev);
+                prevBlock.setNext(takefrom);
                 insertBlock.setPrev(prev);
                 insertBlock.setNext(current);
                 head.setPrev(takefrom);
-                if(lastDataLoc==current){
-                    head.setNext(fp);
-                    prevBlock.setNext(takefrom);
-                    writeBlockAt(current, head);
-                    writeBlockAt(prev, prevBlock);
-                    writeBlockAt(takefrom, insertBlock);
-                }else{
-                    prevBlock.setNext(takefrom);
-                    writeBlockAt(current, head);
-                    writeBlockAt(prev, prevBlock);
-                    writeBlockAt(takefrom, insertBlock);
-                    lastDataBlock.setNext(fp);
-                    writeBlockAt(lastDataLoc, lastDataBlock);
-                }
+                writeBlockAt(prev, prevBlock);
             }
         }
+        writeBlockAt(current, head);
+        writeBlockAt(takefrom, insertBlock);
         try{
             file.seek(0L);
             file.writeLong(dp);
@@ -143,11 +145,12 @@ public class BlockedFile {
 
     public void insertFirst(Friend friend){
         long saveLoc = fp;
+        dp = fp;
         Block block = getBlockAt(saveLoc);
         block.setFriend(friend);
-        writeBlockAt(saveLoc, block);
-        dp = fp;
         fp = block.getNext();
+        block.setNext(-1);
+        writeBlockAt(saveLoc, block);
         try {
             file.seek(0L);
             file.writeLong(dp);
@@ -180,6 +183,14 @@ public class BlockedFile {
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
+    }
+
+    public boolean isHead(Block block){
+        return block.getPrev() == -1;
+    }
+
+    public boolean isTail(Block block){
+        return block.getNext() == -1;
     }
 
 
